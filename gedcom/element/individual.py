@@ -158,16 +158,17 @@ class IndividualElement(Element):
 
         return gender
 
-    def get_birth_data(self):
-        """Returns the birth data of a person formatted as a tuple: (`str` date, `str` place, `list` sources)
-        :rtype: tuple
+    def get_fact_data(self, fact_tag):
+        """Returns the fact data of a person for a given tag formatted as a tuple: (`str` date,
+        `str` place, `list` sources, `str` note) :rtype: tuple
         """
         date = ""
         place = ""
         sources = []
+        note = ""
 
         for child in self.get_child_elements():
-            if child.get_tag() == gedcom.tags.GEDCOM_TAG_BIRTH:
+            if child.get_tag() == fact_tag:
                 for childOfChild in child.get_child_elements():
 
                     if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_DATE:
@@ -179,7 +180,34 @@ class IndividualElement(Element):
                     if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_SOURCE:
                         sources.append(childOfChild.get_value())
 
-        return date, place, sources
+                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_NOTE:
+                        note = childOfChild.get_multi_line_value()
+
+        return date, place, sources, note
+
+    def get_birth_data(self):
+        """Returns the birth data of a person formatted as a tuple: (`str` date, `str` place,
+        `list` sources, `str` note) :rtype: tuple
+        """
+        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_BIRTH)
+
+    def get_christening_data(self):
+        """Returns the christening data of a person formatted as a tuple: (`str` date,
+        `str` place, `list` sources, `str` note) :rtype: tuple
+        """
+        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_CHRISTENING)
+
+    def get_death_data(self):
+        """Returns the death data of a person formatted as a tuple: (`str` date, `str` place,
+        `list` sources, `str` note) :rtype: tuple
+        """
+        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_DEATH)
+
+    def get_burial_data(self):
+        """Returns the burial data of a person formatted as a tuple: (`str` date, `str´ place,
+        `list` sources, `str` note) :rtype: tuple
+        """
+        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_BURIAL)
 
     def get_birth_year(self):
         """Returns the birth year of a person in integer format
@@ -200,49 +228,6 @@ class IndividualElement(Element):
             return int(date)
         except ValueError:
             return -1
-
-    def get_christening_data(self):
-        """Returns the christening data of a person formatted as a tuple: (`str` date, `str` place, `list` sources)
-        :rtype: tuple
-        """
-        date = ""
-        place = ""
-        sources = []
-
-        for child in self.get_child_elements():
-            if child.get_tag() == gedcom.tags.GEDCOM_TAG_CHRISTENING:
-                for childOfChild in child.get_child_elements():
-
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_DATE:
-                        date = childOfChild.get_value()
-
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_PLACE:
-                        place = childOfChild.get_value()
-
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_SOURCE:
-                        sources.append(childOfChild.get_value())
-
-        return date, place, sources
-
-    def get_death_data(self):
-        """Returns the death data of a person formatted as a tuple: (`str` date, `str` place, `list` sources)
-        :rtype: tuple
-        """
-        date = ""
-        place = ""
-        sources = []
-
-        for child in self.get_child_elements():
-            if child.get_tag() == gedcom.tags.GEDCOM_TAG_DEATH:
-                for childOfChild in child.get_child_elements():
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_DATE:
-                        date = childOfChild.get_value()
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_PLACE:
-                        place = childOfChild.get_value()
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_SOURCE:
-                        sources.append(childOfChild.get_value())
-
-        return date, place, sources
 
     def get_death_year(self):
         """Returns the death year of a person in integer format
@@ -271,29 +256,6 @@ class IndividualElement(Element):
         :rtype: tuple
         """
         self.get_burial_data()
-
-    def get_burial_data(self):
-        """Returns the burial data of a person formatted as a tuple: (`str` date, `str´ place, `list` sources)
-        :rtype: tuple
-        """
-        date = ""
-        place = ""
-        sources = []
-
-        for child in self.get_child_elements():
-            if child.get_tag() == gedcom.tags.GEDCOM_TAG_BURIAL:
-                for childOfChild in child.get_child_elements():
-
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_DATE:
-                        date = childOfChild.get_value()
-
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_PLACE:
-                        place = childOfChild.get_value()
-
-                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_SOURCE:
-                        sources.append(childOfChild.get_value())
-
-        return date, place, sources
 
     @deprecated
     def get_census(self):

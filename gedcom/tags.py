@@ -65,6 +65,11 @@ GEDCOM_TAG_CHILD = "CHIL"
 
 The natural, adopted, or sealed (LDS) child of a father and a mother."""
 
+GEDCOM_TAG_CHRISTENING = "CHR"
+"""Value: `CHR`
+
+The religious event (not LDS) of baptizing and/or naming a child."""
+
 GEDCOM_TAG_CONCATENATION = "CONC"
 """Value: `CONC`
 

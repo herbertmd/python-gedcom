@@ -40,6 +40,10 @@ The current development process can be tracked in the [develop branch](https://g
 Local development is done using [pyenv](https://github.com/pyenv/pyenv) and
 [pipenv](https://github.com/pypa/pipenv) using Python 3.5.
 
+Install the module locally by running:
+
+`pip install --editable .`
+
 ### Running tests
 
 1. Run `pipenv install -d` to install normal and dev dependencies

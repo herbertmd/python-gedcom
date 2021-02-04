@@ -99,6 +99,11 @@ GEDCOM_TAG_DEATH = "DEAT"
 
 The event when mortal life terminates."""
 
+GEDCOM_TAG_EVEN = "EVEN"
+"""Value: `EVEN`
+
+A noteworthy happening related to an individual, a group, or an organization."""
+
 GEDCOM_TAG_FAMILY = "FAM"
 """Value: `FAM`.
 
@@ -186,6 +191,13 @@ GEDCOM_TAG_SURNAME = "SURN"
 """Value: `SURN`
 
 A family name passed on or used by members of a family."""
+
+GEDCOM_TAG_TYPE = "TYPE"
+"""Value: `TYPE`
+
+A further qualification to the meaning of the associated superior tag. The value does not have any
+computer processing reliability. It is more in the form of a short one or two word note that should
+be displayed any time the associated data is displayed."""
 
 GEDCOM_TAG_WIFE = "WIFE"
 """Value: `WIFE`

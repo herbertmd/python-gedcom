@@ -119,7 +119,8 @@ class IndividualElement(Element):
         return given_name, surname
 
     def get_all_names(self):
-        return [a.get_value() for a in self.get_child_elements() if a.get_tag() == gedcom.tags.GEDCOM_TAG_NAME]
+        return [a.get_value() for a in self.get_child_elements() if
+                a.get_tag() == gedcom.tags.GEDCOM_TAG_NAME]
 
     def surname_match(self, surname_to_match):
         """Matches a string with the surname of an individual
@@ -171,18 +172,28 @@ class IndividualElement(Element):
 
         return note
 
-    def get_fact_data(self, fact_tag):
-        """Returns the fact data of a person for a given tag formatted as a tuple: (`str` date,
-        `str` place, `list` sources, `str` note) :rtype: tuple
+    def get_fact_data(self, fact_tag, fact_type=""):
+        """Returns the fact data of a person for a given tag formatted as a list of tuples:
+        (`str` value, `str` date, `str` place, `list` sources, `str` note)
+        :type fact_tag: str
+        :type fact_type: str
+        :rtype: list
         """
-        date = ""
-        place = ""
-        sources = []
-        note = ""
-
+        facts = []
         for child in self.get_child_elements():
             if child.get_tag() == fact_tag:
+                valid = True
+                value = child.get_value()
+                date = ""
+                place = ""
+                sources = []
+                note = ""
+
                 for childOfChild in child.get_child_elements():
+                    if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_TYPE:
+                        if fact_type not in childOfChild.get_value():
+                            # Skip this tag if not the expected type.
+                            valid = False
 
                     if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_DATE:
                         date = childOfChild.get_value()
@@ -196,31 +207,43 @@ class IndividualElement(Element):
                     if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_NOTE:
                         note = childOfChild.get_multi_line_value()
 
-        return date, place, sources, note
+                if valid:
+                    facts.append((value, date, place, sources, note))
+        return facts
 
     def get_birth_data(self):
-        """Returns the birth data of a person formatted as a tuple: (`str` date, `str` place,
-        `list` sources, `str` note) :rtype: tuple
-        """
-        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_BIRTH)
-
-    def get_christening_data(self):
-        """Returns the christening data of a person formatted as a tuple: (`str` date,
+        """Returns the birth data of a person formatted as a tuple: (`str` value, `str` date,
         `str` place, `list` sources, `str` note) :rtype: tuple
         """
-        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_CHRISTENING)
+        data = self.get_fact_data(gedcom.tags.GEDCOM_TAG_BIRTH)
+        return data[0] if data else ("", "", "", [], "")
+
+    def get_christening_data(self):
+        """Returns the christening data of a person formatted as a tuple: (`str` value, `str` date,
+        `str` place, `list` sources, `str` note) :rtype: tuple
+        """
+        data = self.get_fact_data(gedcom.tags.GEDCOM_TAG_CHRISTENING)
+        return data[0] if data else ("", "", "", [], "")
 
     def get_death_data(self):
-        """Returns the death data of a person formatted as a tuple: (`str` date, `str` place,
-        `list` sources, `str` note) :rtype: tuple
+        """Returns the death data of a person formatted as a tuple: (`str` value, `str` date,
+        `str` place, `list` sources, `str` note) :rtype: tuple
         """
-        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_DEATH)
+        data = self.get_fact_data(gedcom.tags.GEDCOM_TAG_DEATH)
+        return data[0] if data else ("", "", "", [], "")
 
     def get_burial_data(self):
-        """Returns the burial data of a person formatted as a tuple: (`str` date, `str´ place,
-        `list` sources, `str` note) :rtype: tuple
+        """Returns the burial data of a person formatted as a tuple: (`str` value, `str` date,
+        `str´ place, `list` sources, `str` note) :rtype: tuple
         """
-        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_BURIAL)
+        data = self.get_fact_data(gedcom.tags.GEDCOM_TAG_BURIAL)
+        return data[0] if data else ("", "", "", [], "")
+
+    def get_witness_data(self):
+        """Returns the witness data of a person formatted as a list of tuples: (`str` value,
+        `str` date, `str´ place, `list` sources, `str` note) :rtype: list
+        """
+        return self.get_fact_data(gedcom.tags.GEDCOM_TAG_EVEN, "Witness")
 
     def get_birth_year(self):
         """Returns the birth year of a person in integer format

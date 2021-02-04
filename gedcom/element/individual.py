@@ -158,6 +158,19 @@ class IndividualElement(Element):
 
         return gender
 
+    def get_note(self):
+        """Returns the note for a person in string format
+        :rtype: str
+        """
+        note = ""
+
+        for child in self.get_child_elements():
+            if child.get_tag() == gedcom.tags.GEDCOM_TAG_NOTE:
+                note = child.get_multi_line_value()
+                break
+
+        return note
+
     def get_fact_data(self, fact_tag):
         """Returns the fact data of a person for a given tag formatted as a tuple: (`str` date,
         `str` place, `list` sources, `str` note) :rtype: tuple

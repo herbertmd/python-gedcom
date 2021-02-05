@@ -289,17 +289,28 @@ class Parser(object):
             )
         # Get and analyze families where individual is spouse.
         families = self.get_families(individual, gedcom.tags.GEDCOM_TAG_FAMILY_SPOUSE)
+        # TODO: Combine this code with the IndividualElement.get_fact_data method.
         for family in families:
             for family_data in family.get_child_elements():
                 if family_data.get_tag() == gedcom.tags.GEDCOM_TAG_MARRIAGE:
+                    spouses = self.get_family_members(family, FAMILY_MEMBERS_TYPE_PARENTS)
+                    spouse = [spouse.get_pointer() for spouse in spouses
+                             if spouse.get_pointer() != individual.get_pointer()]
+                    value = spouse[0] if spouse else ''
                     date = ''
                     place = ''
+                    sources = []
+                    note = ''
                     for marriage_data in family_data.get_child_elements():
                         if marriage_data.get_tag() == gedcom.tags.GEDCOM_TAG_DATE:
                             date = marriage_data.get_value()
                         if marriage_data.get_tag() == gedcom.tags.GEDCOM_TAG_PLACE:
                             place = marriage_data.get_value()
-                    marriages.append((date, place))
+                        if marriage_data.get_tag() == gedcom.tags.GEDCOM_TAG_SOURCE:
+                            sources.append(marriage_data.get_value())
+                        if marriage_data.get_tag() == gedcom.tags.GEDCOM_TAG_NOTE:
+                            note = marriage_data.get_multi_line_value()
+                    marriages.append((value, date, place, sources, note))
         return marriages
 
     def get_marriage_years(self, individual):

@@ -39,6 +39,26 @@ GEDCOM_PROGRAM_DEFINED_TAG_FREL = "_FREL"
 
 Relationship to a father."""
 
+GEDCOM_PROGRAM_DEFINED_TAG_TEMPLATE_BIBLIOGRAPHY = "_BIBL"
+"""Value: `_BIBL`
+
+The bibliography text for a template format of a master source."""
+
+GEDCOM_PROGRAM_DEFINED_TAG_TEMPLATE_SHORT_QUOTE = "_SUBQ"
+"""Value: `_SUBQ`
+
+The short quote text for a template format of a master source."""
+
+GEDCOM_PROGRAM_DEFINED_TAG_SOURCE_TEMPLATE = "_TMPLT"
+"""Value: `_TMPLT`
+
+The template format for a master source."""
+
+GEDCOM_TAG_ABBREVIATION = "ABBR"
+"""Value: `ABBR`
+
+The abbreviated title of a master source."""
+
 GEDCOM_TAG_BIRTH = "BIRT"
 """Value: `BIRT`
 
@@ -120,6 +140,21 @@ GEDCOM_TAG_FAMILY_SPOUSE = "FAMS"
 
 Identifies the family in which an individual appears as a spouse."""
 
+GEDCOM_TAG_FIELD = "FIELD"
+"""Value: `FIELD`
+
+A template field for a master source."""
+
+GEDCOM_TAG_FIELD_NAME = "NAME"
+"""Value: `NAME`
+
+A template field name for a master source."""
+
+GEDCOM_TAG_FIELD_VALUE = "VALUE"
+"""Value: `VALUE`
+
+A template field value for a master source."""
+
 GEDCOM_TAG_FILE = "FILE"
 """Value: `FILE`
 
@@ -191,6 +226,16 @@ GEDCOM_TAG_SURNAME = "SURN"
 """Value: `SURN`
 
 A family name passed on or used by members of a family."""
+
+GEDCOM_TAG_TEMPLATE_ID = "TID"
+"""Value: `TID`
+
+The template format id for a master source."""
+
+GEDCOM_TAG_TITLE = "TITL"
+"""Value: `TITL`
+
+The full title of a master source."""
 
 GEDCOM_TAG_TYPE = "TYPE"
 """Value: `TYPE`

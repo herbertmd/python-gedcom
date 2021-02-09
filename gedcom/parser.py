@@ -38,6 +38,7 @@ from gedcom.element.file import FileElement
 from gedcom.element.individual import IndividualElement, NotAnActualIndividualError
 from gedcom.element.object import ObjectElement
 from gedcom.element.root import RootElement
+from gedcom.element.source import SourceElement
 import gedcom.tags
 
 FAMILY_MEMBERS_TYPE_ALL = "ALL"
@@ -252,6 +253,8 @@ class Parser(object):
             element = FileElement(level, pointer, tag, value, crlf, multi_line=False)
         elif tag == gedcom.tags.GEDCOM_TAG_OBJECT:
             element = ObjectElement(level, pointer, tag, value, crlf, multi_line=False)
+        elif tag == gedcom.tags.GEDCOM_TAG_SOURCE:
+            element = SourceElement(level, pointer, tag, value, crlf, multi_line=False)
         else:
             element = Element(level, pointer, tag, value, crlf, multi_line=False)
 

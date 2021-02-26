@@ -197,6 +197,23 @@ class Element(object):
         """
         return self.__children
 
+    def get_descendant_value(self, tags):
+        """Returns the value of the first descendant of this element identified by the list of tags
+        :rtype: list of Element
+        """
+        element = self
+        for tag in tags:
+            found = False
+            for child in element.get_child_elements():
+                if child.get_tag() == tag:
+                    element = child
+                    found = True
+                    break
+            if not found:
+                element = None
+                break
+        return element.get_multi_line_value() if element else ""
+
     def new_child_element(self, tag, pointer="", value=""):
         """Creates and returns a new child element of this element
 

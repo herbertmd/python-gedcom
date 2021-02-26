@@ -202,7 +202,16 @@ class IndividualElement(Element):
                         place = childOfChild.get_value()
 
                     if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_SOURCE:
-                        sources.append(childOfChild.get_value())
+                        master_source = childOfChild.get_value()
+                        reference = childOfChild.get_descendant_value(
+                            [gedcom.tags.GEDCOM_TAG_REFERENCE])
+                        page = childOfChild.get_descendant_value(
+                            [gedcom.tags.GEDCOM_TAG_PAGE])
+                        data = childOfChild.get_descendant_value(
+                            [gedcom.tags.GEDCOM_TAG_DATA, gedcom.tags.GEDCOM_TAG_TEXT])
+
+                        sources.append({'master': master_source, 'reference': reference,
+                                        'page': page, 'data': data})
 
                     if childOfChild.get_tag() == gedcom.tags.GEDCOM_TAG_NOTE:
                         note = childOfChild.get_multi_line_value()

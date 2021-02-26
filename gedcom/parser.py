@@ -310,7 +310,16 @@ class Parser(object):
                         if marriage_data.get_tag() == gedcom.tags.GEDCOM_TAG_PLACE:
                             place = marriage_data.get_value()
                         if marriage_data.get_tag() == gedcom.tags.GEDCOM_TAG_SOURCE:
-                            sources.append(marriage_data.get_value())
+                            master_source = marriage_data.get_value()
+                            reference = marriage_data.get_descendant_value(
+                                [gedcom.tags.GEDCOM_TAG_REFERENCE])
+                            page = marriage_data.get_descendant_value(
+                                [gedcom.tags.GEDCOM_TAG_PAGE])
+                            data = marriage_data.get_descendant_value(
+                                [gedcom.tags.GEDCOM_TAG_DATA, gedcom.tags.GEDCOM_TAG_TEXT])
+
+                            sources.append({'master': master_source, 'reference': reference,
+                                            'page': page, 'data': data})
                         if marriage_data.get_tag() == gedcom.tags.GEDCOM_TAG_NOTE:
                             note = marriage_data.get_multi_line_value()
                     marriages.append((value, date, place, sources, note))

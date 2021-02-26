@@ -64,6 +64,30 @@ class SourceElement(Element):
 
         return bibliography
 
+    def get_reference(self):
+        """Returns the reference of a master source in string format.
+        :rtype: str
+        """
+        reference = ""
+
+        for child in self.get_child_elements():
+            if child.get_tag() == gedcom.tags.GEDCOM_TAG_REFERENCE:
+                reference = child.get_multi_line_value()
+
+        return reference
+
+    def get_repository_pointer(self):
+        """Returns the pointer to the repository of a master source in string format.
+        :rtype: str
+        """
+        repository_pointer = ""
+
+        for child in self.get_child_elements():
+            if child.get_tag() == gedcom.tags.GEDCOM_TAG_REPOSITORY:
+                reference = child.get_value()
+
+        return repository_pointer
+
     def get_short_quote(self):
         """Returns the short quote field of a master source in string format.
         :rtype: str

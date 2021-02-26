@@ -109,6 +109,11 @@ Leading spaces could be important to the formatting of the resultant text. When 
 the reader should assume only one delimiter character following the `CONT` tag. Assume that the rest of the leading
 spaces are to be a part of the value."""
 
+GEDCOM_TAG_DATA = "DATA"
+"""Value: `DATA`
+
+Pertaining to stored automated information."""
+
 GEDCOM_TAG_DATE = "DATE"
 """Value: `DATE`
 
@@ -202,6 +207,11 @@ GEDCOM_TAG_OCCUPATION = "OCCU"
 
 The type of work or profession of an individual."""
 
+GEDCOM_TAG_PAGE = "PAGE"
+"""Value: `PAGE`
+
+A number or description to identify where information can be found in a referenced work."""
+
 GEDCOM_TAG_PLACE = "PLAC"
 """Value: `PLAC`
 
@@ -211,6 +221,16 @@ GEDCOM_TAG_PRIVATE = "PRIV"
 """Value: `PRIV`
 
 Flag for private address or event."""
+
+GEDCOM_TAG_REFERENCE = "REFN"
+"""Value: `REFN`
+
+The original reference for a master source."""
+
+GEDCOM_TAG_REPOSITORY = "REPO"
+"""Value: `REPO`
+
+The repository where a master source if from."""
 
 GEDCOM_TAG_SEX = "SEX"
 """Value: `SEX`
@@ -231,6 +251,11 @@ GEDCOM_TAG_TEMPLATE_ID = "TID"
 """Value: `TID`
 
 The template format id for a master source."""
+
+GEDCOM_TAG_TEXT = "TEXT"
+"""Value: `TEXT`
+
+The exact wording found in an original source document."""
 
 GEDCOM_TAG_TITLE = "TITL"
 """Value: `TITL`
